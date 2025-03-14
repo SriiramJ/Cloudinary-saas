@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { getCldImageUrl, getCldVideoUrl } from "next-cloudinary";
 import { Download, Clock, FileDown, FileUp } from "lucide-react";
 import dayjs from "dayjs";
-import realtiveTime from "dayjs/plugin/relativeTime";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { filesize } from "filesize";
 import { Video } from "@/types";
 
-dayjs.extend(realtiveTime);
+dayjs.extend(relativeTime);
 
 interface VideoCardProps {
   video: Video;
@@ -92,9 +93,11 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, onDownload }) => {
             />
           )
         ) : (
-          <img
+          <Image
             src={getThumbnailUrl(video.publicId)}
             alt={video.title}
+            width={400}
+            height={225}
             className="w-full h-full object-cover"
           />
         )}
