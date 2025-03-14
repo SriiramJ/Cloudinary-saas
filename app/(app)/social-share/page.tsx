@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import { CldImage } from "next-cloudinary";
 
@@ -12,7 +13,7 @@ const socialFormats = {
 
 type SocialFormat = keyof typeof socialFormats;
 
-export default function socialShare() {
+export default function SocialShare() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [selectedFormat, setSelectedFormat] = useState<SocialFormat>(
     "Instagram Square (1:1)"
@@ -32,9 +33,7 @@ export default function socialShare() {
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
     setIsUploading(true);
-
     const formData = new FormData();
     formData.append("file", file);
 
@@ -45,8 +44,9 @@ export default function socialShare() {
       });
 
       if (!response.ok) throw new Error("Failed to upload image");
+
       const data = await response.json();
-      setUploadedImage(data.public_id);
+      setUploadedImage(data.publicId);
     } catch (error) {
       console.log(error);
       alert("Failed to upload image");
@@ -74,7 +74,6 @@ export default function socialShare() {
         document.body.removeChild(link);
       });
   };
-
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
